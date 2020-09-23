@@ -1,33 +1,35 @@
 import React from 'react'
-// import CurrencyFormat from 'react-currency-format';
+import { useHistory } from 'react-router-dom';
+import CurrencyFormat from "react-currency-format";
 import '../assets/styles/Components/Subtotal.css'
 import { getBasketTotal } from '../reducer';
 import { useStateValue } from '../StateProvider';
 
 function Subtotal() {
+  const history = useHistory();
   const [{basket}, dispatch] = useStateValue();
 
   return (
     <div className='subtotal'>
-      {/* <CurrencyFormat 
+      <CurrencyFormat
         renderText={(value) => (
-          <div>
+          <>
             <p>
-              Subtotal ({basket.length} items):
-              <strong>{`${value}`}</strong>
+              {/* Part of the homework */}
+              Subtotal ({basket.length} items): <strong>{value}</strong>
             </p>
             <small className="subtotal__gift">
-              <input type="checkbox" />This order contains a gift
+              <input type="checkbox" /> This order contains a gift
             </small>
-          </div>
+          </>
         )}
         decimalScale={2}
-        value={0}
-        displayText={'text'}
+        value={getBasketTotal(basket)} // Part of the homework
+        displayType={"text"}
         thousandSeparator={true}
-        prefix={'$'}
-      /> */}
-      <div>
+        prefix={"$"}
+      />
+      {/* <div>
             <p>
               Subtotal ({basket.length} items):
               <strong>{` $ ${getBasketTotal(basket)}`}</strong>
@@ -35,8 +37,8 @@ function Subtotal() {
             <small className="subtotal__gift">
               <input type="checkbox" />This order contains a gift
             </small>
-          </div>
-      <button>Proceed to Checkout</button>
+          </div> */}
+      <button onClick={e => history.push('/payment')}>Proceed to Checkout</button>
     </div>
   )
 }
